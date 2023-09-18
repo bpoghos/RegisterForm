@@ -1,12 +1,23 @@
+import { Component } from 'react';
 import RegisterPage from '../RegisterPage';
 import './app.css';
 
-function App() {
-  return (
-    <div className="app">
-      <RegisterPage />
-    </div>
-  );
+
+export default class App extends Component {
+
+  state = {
+    
+  }
+
+  render() {
+    return (
+      <div className="app">
+        <RegisterPage />
+      </div>
+    );
+  }
+
+
 }
 
-export default App;
+
