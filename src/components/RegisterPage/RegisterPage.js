@@ -5,8 +5,33 @@ export default class RergisterPage extends Component {
     username: '',
     email: '',
     password: '',
+    files: [],
     validationErrors: {}
   }
+
+
+  handleUploadClick = () => {
+    this.fileInput.click();
+  };
+
+
+  handleFileChange = (e) => {
+    const files = e.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        const newFiles = [...this.state.files, e.target.result];
+        this.setState({ files: newFiles });
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+
   validateEmail = (email) => {
     return false
   }
@@ -17,9 +42,11 @@ export default class RergisterPage extends Component {
     const { name, value } = event.target;
     this.setState({ [name]: value })
   }
+
   handleRegister = () => {
-    const { username, email, password } = this.state;
+    const { username, email, password, files } = this.state;
     const validationErrors = {}
+
     if (!email.trim() && !this.validateEmail(email)) {
       validationErrors.email = 'Please enter a valid email.'
     }
@@ -30,10 +57,9 @@ export default class RergisterPage extends Component {
       validationErrors.username = 'Username is required.'
     }
     if (Object.keys(validationErrors).length === 0) {
-      this.props.handleRegistration({ username, email, password })
+      const profile = this.props.handleRegistration({ username, email, password, files })
+      localStorage.setItem('data', JSON.stringify(profile))
 
-      const local = JSON.stringify(this.state)
-        localStorage(local)
       this.setState({
         username: '',
         email: '',
@@ -43,6 +69,7 @@ export default class RergisterPage extends Component {
     } else {
       this.setState({ validationErrors })
     }
+
   }
   render() {
     const { username, email, password, validationErrors } = this.state;
@@ -86,15 +113,33 @@ export default class RergisterPage extends Component {
           {
             Object.keys(validationErrors).length ? (
               <div className="error-alert">
-                <span>{ validationErrors.email }</span>
-                <span>{ validationErrors.password }</span>
-                <span>{ validationErrors.username }</span>
+                <span>{validationErrors.email}</span>
+                <span>{validationErrors.password}</span>
+                <span>{validationErrors.username}</span>
               </div>
             ) : null
           }
+
+          <div className="image-container">
+            <button className="upload-image" onClick={this.handleUploadClick}>Upload</button>
+            <input
+              type="file"
+              ref={(input) => (this.fileInput = input)}
+              style={{ display: 'none' }}
+              onChange={this.handleFileChange}
+              multiple
+            />
+
+            {this.state.files.map((fileData, index) => (
+              <div key={index} className="image">
+                <img src={fileData} alt="photos" id="photo" />
+              </div>
+            ))}
+          </div>
+
           <button
             className="register-btn"
-            onClick={ this.handleRegister }
+            onClick={this.handleRegister}
           >
             Register
           </button>
