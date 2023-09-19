@@ -33,10 +33,13 @@ export default class RergisterPage extends Component {
 
 
   validateEmail = (email) => {
-    return false
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailRegex.test(email);
   }
+
   validatePassword = (password) => {
-    return false
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
+    return passwordRegex.test(password);
   }
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -46,19 +49,20 @@ export default class RergisterPage extends Component {
   handleRegister = () => {
     const { username, email, password, files } = this.state;
     const validationErrors = {}
-
-    if (!email.trim() && !this.validateEmail(email)) {
+    
+    if (!email.trim() || !this.validateEmail(email)) {
+      console.log(!this.validateEmail(email));
       validationErrors.email = 'Please enter a valid email.'
     }
-    if (!password.trim() && !this.validatePassword(password)) {
+    if (!password.trim() || !this.validatePassword(password)) {
       validationErrors.password = 'Password must contain letters, numbers and bet at least 6 characters long.'
     }
     if (username.trim().length < 3) {
       validationErrors.username = 'Username is required.'
     }
     if (Object.keys(validationErrors).length === 0) {
-      const profile = this.props.handleRegistration({ username, email, password, files })
-      localStorage.setItem('data', JSON.stringify(profile))
+      this.props.handleRegistration({ username, email, password, files })
+      localStorage.setItem('data', JSON.stringify(this.state))
 
       this.setState({
         username: '',

@@ -7,7 +7,6 @@ import './app.css';
 export default class App extends Component {
 
   state = {
-    isRegistered: false,
     userData: null
   }
 
@@ -15,21 +14,22 @@ export default class App extends Component {
   handleRegistration = (userData) => {
     this.setState({
       userData,
-      isRegistered: true,
+      
     })
   }
 
+
   render() {
-    const { isRegistered, userData } = this.state
+    const { userData } = this.state
 
 
 
     return (
       <div className="app">
         {
-          isRegistered ?
+          localStorage.getItem('data') ?
             <UserPage userData={userData} /> :
-            <RegisterPage handleRegistration={this.handleRegistration} />
+            <RegisterPage handleRegistration={this.handleRegistration} /> 
         }
 
       </div>

@@ -4,21 +4,26 @@ import './user-page.css'
 export default class UserPage extends Component {
 
 
-    render() {
-      const { username, email, password, files } = this.props.userData
+  onClearData = () => {
+    localStorage.clear()
+  }
 
+
+    render() {
+      const data = JSON.parse(localStorage.getItem('data'));
 
       return (
         <div className="user-page-wrapper">
-          <h1>Wellcome, <span>{username}!</span></h1>
-          <img src={files} alt="profile-pic" />
+          <h1>Wellcome, <span>{data?.username}!</span></h1>
+          <img src={data?.files} alt="profile-pic" />
           <h4>Personal info</h4>
           <div>
-            Email: <span>{email}</span>
+            Email: <span>{data?.email}</span>
           </div>
           <div>
-            Password: <span>{password}</span>
+            Password: <span>{data?.password}</span>
           </div>
+          <button className="logout-btn" onClick={this.onClearData}>Logout</button>
         </div>
       )
     }
