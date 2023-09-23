@@ -1,42 +1,35 @@
-import { Component } from 'react';
 import RegisterPage from '../RegisterPage';
 import UserPage from '../UserPage/UserPage';
 import './app.css';
+import FCounter from '../Counter/FCounter';
+import { useState } from 'react';
 
 
-export default class App extends Component {
+const App = () => {
 
-  state = {
-    userData: null
+  const [userData, setUserData] = useState(null)
+
+
+  const handleRegistration = (userData) => {
+    setUserData(userData)
   }
-
-
-  handleRegistration = (userData) => {
-    this.setState({
-      userData,
-      
-    })
-  }
-
-
-  render() {
-    const { userData } = this.state
-
-
 
     return (
       <div className="app">
+        {/* <FCounter /> */}
         {
           localStorage.getItem('data') ?
             <UserPage userData={userData} /> :
-            <RegisterPage handleRegistration={this.handleRegistration} /> 
+            <RegisterPage handleRegistration={handleRegistration} /> 
         }
 
       </div>
     );
   }
 
+  export default App
 
-}
+
+
 
 
