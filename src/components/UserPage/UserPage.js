@@ -1,16 +1,10 @@
-import { Component } from "react";
+import LocalStorageService from '../../services/LocalStorageService'
 import './user-page.css'
 
-export default class UserPage extends Component {
+const UserPage = ({ onClearData }) => {
 
 
-  onClearData = () => {
-    localStorage.clear()
-  }
-
-
-    render() {
-      const data = JSON.parse(localStorage.getItem('data'));
+const data = LocalStorageService.getUserData()
 
       return (
         <div className="user-page-wrapper">
@@ -23,8 +17,10 @@ export default class UserPage extends Component {
           <div>
             Password: <span>{data?.password}</span>
           </div>
-          <button className="logout-btn" onClick={this.onClearData}>Logout</button>
+          <button className="logout-btn" onClick={onClearData}>Logout</button>
         </div>
       )
     }
-}
+
+
+    export default UserPage

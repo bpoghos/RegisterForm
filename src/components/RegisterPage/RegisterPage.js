@@ -1,82 +1,103 @@
-import { Component } from "react";
+import { useState } from 'react';
 import './register-page.css'
-export default class RergisterPage extends Component {
-  state = {
-    username: '',
-    email: '',
-    password: '',
-    files: [],
-    validationErrors: {}
-  }
+import LocalStorageService from '../../services/LocalStorageService';
 
 
-  handleUploadClick = () => {
-    this.fileInput.click();
+const RergisterPage = ({ handleRegistration }) => {
+
+
+  const [username, setUserName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [files, setFiles] = useState([])
+  const [validationErrors, setValidationErrors] = useState({})
+
+  let fileInput
+
+
+
+  const handleUploadClick = () => {
+    fileInput.click();
   };
 
 
-  handleFileChange = (e) => {
-    const files = e.target.files;
-
-    for (let i = 0; i < files.length; i++) {
-      const file = files[i];
+  const handleFileChange = (e) => {
+    const file = e.target.files[0]; 
+  
+    if (file) {
       const reader = new FileReader();
-
+  
       reader.onload = (e) => {
-        const newFiles = [...this.state.files, e.target.result];
-        this.setState({ files: newFiles });
+        const fileData = e.target.result; 
+        setFiles([fileData]); 
       };
-
-      reader.readAsDataURL(file);
+  
+      reader.readAsDataURL(file); 
     }
   };
+  
 
 
-  validateEmail = (email) => {
+  const validateEmail = (email) => {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     return emailRegex.test(email);
   }
 
-  validatePassword = (password) => {
+  const validatePassword = (password) => {
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/;
     return passwordRegex.test(password);
   }
-  handleChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    this.setState({ [name]: value })
-  }
-
-  handleRegister = () => {
-    const { username, email, password, files } = this.state;
-    const validationErrors = {}
     
-    if (!email.trim() || !this.validateEmail(email)) {
-      console.log(!this.validateEmail(email));
+    switch (name) {
+      case 'username':
+        setUserName(value);
+        break;
+      case 'email':
+        setEmail(value);
+        break;
+      case 'password':
+        setPassword(value);
+        break;
+      default:
+        break;
+    }
+  };
+  
+
+  const handleRegister = () => {
+    const validationErrors = {}
+    const allState = { username, email, password, files }
+    
+    if (!email.trim() || !validateEmail(email)) {
+      console.log(!validateEmail(email));
       validationErrors.email = 'Please enter a valid email.'
     }
-    if (!password.trim() || !this.validatePassword(password)) {
+    if (!password.trim() || !validatePassword(password)) {
       validationErrors.password = 'Password must contain letters, numbers and bet at least 6 characters long.'
     }
     if (username.trim().length < 3) {
       validationErrors.username = 'Username is required.'
     }
     if (Object.keys(validationErrors).length === 0) {
-      this.props.handleRegistration({ username, email, password, files })
-      localStorage.setItem('data', JSON.stringify(this.state))
+      handleRegistration(username, email, password, files)
+      LocalStorageService.saveUserData(allState)
 
-      this.setState({
-        username: '',
-        email: '',
-        password: '',
-        validationErrors: {}
-      })
+
+      setUserName('')
+      setEmail('')
+      setPassword('')
+      setFiles([])
+      setValidationErrors({})
+
+
     } else {
-      this.setState({ validationErrors })
+      setValidationErrors(validationErrors)
     }
 
   }
-  render() {
-    const { username, email, password, validationErrors } = this.state;
+  
     return (
       <div className="register-page-wrapper">
         <h1>Register page</h1>
@@ -89,7 +110,7 @@ export default class RergisterPage extends Component {
               placeholder="Username"
               id="username"
               value={username}
-              onChange={this.handleChange}
+              onChange={handleChange}
             />
           </div>
           <div className="register-input">
@@ -100,7 +121,7 @@ export default class RergisterPage extends Component {
               placeholder="Email"
               id="email"
               value={email}
-              onChange={this.handleChange}
+              onChange={handleChange}
             />
           </div>
           <div className="register-input">
@@ -111,7 +132,7 @@ export default class RergisterPage extends Component {
               placeholder="Password"
               id="password"
               value={password}
-              onChange={this.handleChange}
+              onChange={handleChange}
             />
           </div>
           {
@@ -125,16 +146,15 @@ export default class RergisterPage extends Component {
           }
 
           <div className="image-container">
-            <button className="upload-image" onClick={this.handleUploadClick}>Upload</button>
+            <button className="upload-image" onClick={handleUploadClick}>Upload</button>
             <input
               type="file"
-              ref={(input) => (this.fileInput = input)}
+              ref={(input) => (fileInput = input)}
               style={{ display: 'none' }}
-              onChange={this.handleFileChange}
-              multiple
+              onChange={handleFileChange}
             />
 
-            {this.state.files.map((fileData, index) => (
+            {files.map((fileData, index) => (
               <div key={index} className="image">
                 <img src={fileData} alt="photos" id="photo" />
               </div>
@@ -143,7 +163,7 @@ export default class RergisterPage extends Component {
 
           <button
             className="register-btn"
-            onClick={this.handleRegister}
+            onClick={handleRegister}
           >
             Register
           </button>
@@ -151,4 +171,6 @@ export default class RergisterPage extends Component {
       </div>
     )
   }
-}
+
+
+  export default RergisterPage
