@@ -1,3 +1,7 @@
+.dark-theme .user-page-wrapper{
+    background-color: black;
+}
+
 .user-page-wrapper{
     width: 400px;
     background-color: #fff;

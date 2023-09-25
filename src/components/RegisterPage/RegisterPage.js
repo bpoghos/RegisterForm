@@ -3,7 +3,7 @@ import './register-page.css'
 import LocalStorageService from '../../services/LocalStorageService';
 
 
-const RergisterPage = ({ handleRegistration, darkStyle }) => {
+const RergisterPage = ({ handleRegistration }) => {
 
   const [username, setUserName] = useState('')
   const [email, setEmail] = useState('')
@@ -98,7 +98,7 @@ const RergisterPage = ({ handleRegistration, darkStyle }) => {
   }
   
     return (
-      <div className="register-page-wrapper" style={darkStyle}>
+      <div className="register-page-wrapper">
         <h1>Register page</h1>
         <div className="register-form">
           <div className="register-input">
