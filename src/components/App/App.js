@@ -1,9 +1,10 @@
-import RegisterPage  from '../RegisterPage';
+import RegisterPage from '../RegisterPage';
 import UserPage from '../UserPage/UserPage';
 import './app.css';
 import FCounter from '../Counter/FCounter';
 import { useState } from 'react';
 import LocalStorageService from '../../services/LocalStorageService';
+import DarkThemeToggle from '../DarkThemeToggle';
 
 
 const App = () => {
@@ -11,6 +12,7 @@ const App = () => {
   const storedData = LocalStorageService.getUserData()
   const [userData, setUserData] = useState(null)
   const [isRegistered, setIsRegistered] = useState(!!storedData)
+  const [darkMode, setDarkMode] = useState(false)
 
 
   const handleRegistration = (uData) => {
@@ -24,20 +26,32 @@ const App = () => {
     setIsRegistered(false)
   }
 
-    return (
-      <div className="app">
-        {/* <FCounter /> */}
-        {
-          isRegistered ?
-            <UserPage userData={userData} onClearData={onClearData}/> :
-            <RegisterPage handleRegistration={handleRegistration} /> 
-        }
-
-      </div>
-    );
+  const onDarkMode = () => {
+      setDarkMode(!darkMode)
   }
 
-  export default App
+  const darkStyle = {
+    backgroundColor: darkMode ? '#000' : '#fff',
+    color: darkMode ? '#fff' : '#000'
+  }
+
+
+
+  return (
+    <div className="app">
+      <DarkThemeToggle onDarkMode={onDarkMode}/>
+      {/* <FCounter /> */}
+      {
+        isRegistered ?
+            <UserPage userData={userData} onClearData={onClearData}/>:
+            <RegisterPage handleRegistration={handleRegistration} darkStyle={darkStyle}/>
+      }
+
+    </div>
+  );
+}
+
+export default App
 
 
 
