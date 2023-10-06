@@ -1,41 +1,84 @@
+import { Col, Container, Row } from "react-bootstrap";
 import Header from "../Header";
-import MainCards from "../MainCards";
-import MainTable from "../MainTable";
-import MainTitle from "../MainTitle";
-import NewsCards from "../NewsCards";
+import NewsCard from "../NewsCard";
+import UserCard from "../UserCard";
+import FullNews from "../FullNews";
+
 
 const App = () => {
 
+  
 
   const data = [
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 1},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 2},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 3},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 4},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 5},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 6},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 7},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 8},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 9},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 10},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 11},
-    {image: 'https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80', title: 'Test News', text: 'asdghjd akad jgsad asg dkasd kasjdg skad gaksjd gksjadgk asjdg ksajgd kasjd gkajd gksajgdkasjgad kdsajgd ksajd gas', id: 12},
-
-
-
+    {
+      image: '/static/images/image1.webp',
+      title: 'Test News',
+      text: 'text content 1',
+      id: 1,
+      fullText: 'full text content 1',
+      pubDate: '17.03.2022'
+    },
+    {
+      image: '/static/images/image2.jpeg',
+      title: 'Test News',
+      text: 'text content 2',
+      id: 2,
+      fullText: 'full text content 2',
+      pubDate: '25.02.2021'
+    },
+    { 
+      image: '/static/images/image3.avif', 
+      title: 'Test News', 
+      text: 'text content 3', 
+      id: 3,
+      fullText: 'full text content 3',
+      pubDate: '10.03.2023'
+     },
   ]
-  
+
+  const onNews = () => {
+    
+  }
+
 
 
   return (
     <div>
       <Header />
-      <NewsCards data={data}/>
-      <MainTitle />
-      <MainCards />
-      <MainTable />
+      <Container className="mt-5 mb-5">
+        <Row>
+          {data.map((n) => {
+            return (
+              <Col lg={3} md={4} sm={6} key={n.id}>
+                <NewsCard news={n} onNews={onNews}/>
+              </Col>
+            )
+          })}
+
+        </Row>
+        <Row>
+          <FullNews data={data}/>
+        </Row>
+      </Container>
+      
+     
+
+
+
+      {/* <Container>
+        <Row>
+          <Col lg={3}>
+            <UserCard />
+          </Col>
+        </Row>
+      </Container> */}
+      <footer className="bg-dark text-white p-3 text-center">
+        <Container>
+          &copy; 2023 News portal, All Rights Reserved
+        </Container>
+      </footer>
     </div>
-    
+
   );
 }
 

@@ -1,27 +1,27 @@
-import { Navbar, Container, Nav, InputGroup, Form, Button } from "react-bootstrap"
+import { Navbar, Container, Nav, InputGroup, Form, Button, FormControl } from "react-bootstrap"
 
 
 const Header = () => {
 
     return (
-        <Navbar expand="sm" className="ms-auto" bg="dark" data-bs-theme="dark">
-            <Container>
-                <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+        <Navbar bg="dark" variant="dark" expand='lg'>
+            <Navbar.Brand href="#">News</Navbar.Brand>
+            <Navbar.Toggle aria-controls="my-navbar"/>
+            <Navbar.Collapse id="my-navbar">
                 <Nav className="me-auto">
-                    <Nav.Link href="#home">Home</Nav.Link>
-                    <Nav.Link href="#features">About</Nav.Link>
+                    <Nav.Link href="#">Home</Nav.Link>
+                    <Nav.Link href="#">About</Nav.Link>
                 </Nav>
-            </Container>
-            <InputGroup >
-                <Form.Control
-                    placeholder="Search"
-                />
-                <Button className="me-2" variant="outline-secondary">
-                    Search
-                </Button>
-            </InputGroup>
-            <Button className="me-2" variant="outline-secondary">Login</Button>
-            <Button className="me-2" variant="warning">Register</Button>
+
+                <div className="ml-auto d-flex">
+                    <Form className="d-flex">
+                        <FormControl type="text" placeholder="Search" className="mr-sm"/>
+                        <Button variant="outline-success">Search</Button>
+                        <Button variant="primary">Login</Button>
+                        <Button variant="secondary">Register</Button>
+                    </Form>
+                </div>
+            </Navbar.Collapse>
         </Navbar>
     )
 
